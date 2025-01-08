@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import FocusTrap from 'focus-trap-react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import type { ReactNode } from 'react';
 import React from 'react';
 import { Portal } from './Portal';

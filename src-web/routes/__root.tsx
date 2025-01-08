@@ -1,7 +1,7 @@
 import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import classNames from 'classnames';
-import { MotionConfig } from 'framer-motion';
+import { MotionConfig } from 'motion/react';
 import { Provider as JotaiProvider } from 'jotai';
 import React, { Suspense } from 'react';
 import { DndProvider } from 'react-dnd';

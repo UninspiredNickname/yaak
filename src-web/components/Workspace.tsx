@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import type { CSSProperties, MouseEvent as ReactMouseEvent } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import {useEnsureActiveCookieJar, useSubscribeActiveCookieJarId} from "../hooks/useActiveCookieJar";

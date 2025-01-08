@@ -70,6 +70,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     'whitespace-nowrap outline-none',
     'flex-shrink-0 flex items-center',
     'focus-visible-or-class:ring',
+    'relative group/button', // for tooltip positioning
     disabled ? 'pointer-events-none opacity-disabled' : 'pointer-events-auto',
     justify === 'start' && 'justify-start',
     justify === 'center' && 'justify-center',

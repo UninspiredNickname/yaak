@@ -958,6 +958,7 @@ pub async fn upsert_environment<R: Runtime>(
             EnvironmentIden::EnvironmentId,
             EnvironmentIden::WorkspaceId,
             EnvironmentIden::Name,
+            EnvironmentIden::Private,
             EnvironmentIden::Variables,
         ])
         .values_panic([
@@ -967,6 +968,7 @@ pub async fn upsert_environment<R: Runtime>(
             environment.environment_id.into(),
             environment.workspace_id.into(),
             trimmed_name.into(),
+            environment.private.into(),
             serde_json::to_string(&environment.variables)?.into(),
         ])
         .on_conflict(
@@ -974,6 +976,7 @@ pub async fn upsert_environment<R: Runtime>(
                 .update_columns([
                     EnvironmentIden::UpdatedAt,
                     EnvironmentIden::Name,
+                    EnvironmentIden::Private,
                     EnvironmentIden::Variables,
                 ])
                 .to_owned(),
@@ -2078,7 +2081,12 @@ pub async fn get_workspace_export_resources<R: Runtime>(
             .workspaces
             .push(get_workspace(mgr, workspace_id).await.expect("Failed to get workspace"));
         data.resources.environments.append(
-            &mut list_environments(mgr, workspace_id).await.expect("Failed to get environments"),
+            &mut list_environments(mgr, workspace_id)
+                .await
+                .expect("Failed to get environments")
+                .into_iter()
+                .filter(|e| !e.private)
+                .collect::<Vec<Environment>>(),
         );
         data.resources
             .folders

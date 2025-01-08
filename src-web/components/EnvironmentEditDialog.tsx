@@ -23,7 +23,7 @@ import type { PairEditorProps } from './core/PairEditor';
 import { PairOrBulkEditor } from './core/PairOrBulkEditor';
 import { Separator } from './core/Separator';
 import { SplitLayout } from './core/SplitLayout';
-import { HStack, VStack } from './core/Stacks';
+import { HStack } from './core/Stacks';
 
 interface Props {
   initialEnvironment: Environment | null;
@@ -127,9 +127,9 @@ const EnvironmentEditor = function ({
     fallback: true,
   });
   const { subEnvironments } = useEnvironments();
-  const updateEnvironment = useUpdateEnvironment(environment?.id ?? null);
+  const { mutate: updateEnvironment } = useUpdateEnvironment(environment?.id ?? null);
   const handleChange = useCallback<PairEditorProps['onChange']>(
-    (variables) => updateEnvironment.mutate({ variables }),
+    (variables) => updateEnvironment({ variables }),
     [updateEnvironment],
   );
 
@@ -163,13 +163,29 @@ const EnvironmentEditor = function ({
   }, []);
 
   return (
-    <VStack space={4} className={classNames(className, 'pl-4')}>
+    <div className={classNames(className, 'pl-4 grid gap-4 grid-rows-[auto_minmax(0,1fr)] h-full')}>
       <HStack space={2} className="justify-between">
-        <Heading className="w-full flex items-center gap-1">
-          <div>{environment?.name}</div>
+        <Heading className="w-full flex items-center gap-1.5">
+          <div className="mr-2">{environment?.name}</div>
+          <Button
+            size="xs"
+            className={classNames('text-base font-normal', environment.private && 'text-info')}
+            variant="border"
+            aria-pressed={environment.private}
+            rightSlot={<Icon icon={environment.private ? 'lock' : 'lock_open'} />}
+            onClick={() => updateEnvironment({ private: !environment.private })}
+            title={
+              environment.private
+                ? 'Environment will not be included in export or filesystem sync'
+                : 'Environment will be included in export and filesystem sync'
+            }
+          >
+            {environment.private ? 'Private' : 'Public'}
+          </Button>
           <IconButton
-            iconClassName="text-text-subtlest"
-            size="sm"
+            iconClassName="text-text-subtle"
+            size="xs"
+            aria-pressed={valueVisibility.value ?? false}
             icon={valueVisibility.value ? 'eye' : 'eye_closed'}
             title={valueVisibility.value ? 'Hide Values' : 'Reveal Values'}
             onClick={() => {
@@ -178,7 +194,7 @@ const EnvironmentEditor = function ({
           />
         </Heading>
       </HStack>
-      <div className="h-full pr-2 pb-2">
+      <div className="h-full pr-2 pb-2 grid grid-rows-[auto_minmax(0,1fr)]">
         <PairOrBulkEditor
           preferenceName="environment"
           nameAutocomplete={nameAutocomplete}
@@ -193,7 +209,7 @@ const EnvironmentEditor = function ({
           stateKey={`environment.${environment.id}`}
         />
       </div>
-    </VStack>
+    </div>
   );
 };
 

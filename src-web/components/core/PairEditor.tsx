@@ -42,7 +42,6 @@ export type PairEditorProps = {
   nameAutocompleteVariables?: boolean;
   namePlaceholder?: string;
   nameValidate?: InputProps['validate'];
-  noScroll?: boolean;
   onChange: (pairs: Pair[]) => void;
   pairs: Pair[];
   stateKey: InputProps['stateKey'];
@@ -76,7 +75,6 @@ export const PairEditor = forwardRef<PairEditorRef, PairEditorProps>(function Pa
     nameAutocompleteVariables,
     namePlaceholder,
     nameValidate,
-    noScroll,
     onChange,
     pairs: originalPairs,
     valueAutocomplete,
@@ -204,7 +202,7 @@ export const PairEditor = forwardRef<PairEditorRef, PairEditorProps>(function Pa
         className,
         '@container relative',
         'pb-2 mb-auto h-full',
-        !noScroll && 'overflow-y-auto max-h-full',
+        'overflow-y-auto max-h-full',
         // Move over the width of the drag handle
         '-ml-3 -mr-2 pr-2',
         // Pad to make room for the drag divider

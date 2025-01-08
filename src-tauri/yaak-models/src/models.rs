@@ -252,6 +252,7 @@ pub struct Environment {
     pub updated_at: NaiveDateTime,
 
     pub name: String,
+    pub private: bool,
     pub variables: Vec<EnvironmentVariable>,
 }
 
@@ -267,6 +268,7 @@ pub enum EnvironmentIden {
     WorkspaceId,
 
     Name,
+    Private,
     Variables,
 }
 
@@ -283,6 +285,7 @@ impl<'s> TryFrom<&Row<'s>> for Environment {
             created_at: r.get("created_at")?,
             updated_at: r.get("updated_at")?,
             name: r.get("name")?,
+            private: r.get("private")?,
             variables: serde_json::from_str(variables.as_str()).unwrap_or_default(),
         })
     }

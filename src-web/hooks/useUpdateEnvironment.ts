@@ -1,13 +1,9 @@
-import { useFastMutation } from './useFastMutation';
 import type { Environment } from '@yaakapp-internal/models';
-import { useSetAtom } from 'jotai/index';
 import { getEnvironment } from '../lib/store';
 import { invokeCmd } from '../lib/tauri';
-import { environmentsAtom } from './useEnvironments';
-import {updateModelList} from "./useSyncModelStores";
+import { useFastMutation } from './useFastMutation';
 
 export function useUpdateEnvironment(id: string | null) {
-  const setEnvironments = useSetAtom(environmentsAtom);
   return useFastMutation<
     Environment,
     unknown,
@@ -22,9 +18,6 @@ export function useUpdateEnvironment(id: string | null) {
 
       const newEnvironment = typeof v === 'function' ? v(environment) : { ...environment, ...v };
       return invokeCmd<Environment>('cmd_update_environment', { environment: newEnvironment });
-    },
-    onSuccess: async (environment) => {
-      setEnvironments(updateModelList(environment));
     },
   });
 }

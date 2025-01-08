@@ -1,12 +1,21 @@
-import { debounce } from '@yaakapp-internal/lib';
-import type { Dispatch, SetStateAction } from 'react';
-import { useMemo, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export function useDebouncedState<T>(
   defaultValue: T,
   delay = 500,
-): [T, Dispatch<SetStateAction<T>>, Dispatch<SetStateAction<T>>] {
+): [T, (v: T) => void, (v: T) => void] {
   const [state, setState] = useState<T>(defaultValue);
-  const debouncedSetState = useMemo(() => debounce(setState, delay), [delay]);
-  return [state, debouncedSetState, setState];
+  const timeout = useRef<NodeJS.Timeout>();
+  const debouncedSetState = useCallback(
+    (v: T) => {
+      clearTimeout(timeout.current);
+      timeout.current = setTimeout(() => setState(v), delay);
+    },
+    [delay],
+  );
+  const immediateSetState = useCallback((v: T) => {
+    clearTimeout(timeout.current);
+    setState(v);
+  }, []);
+  return [state, debouncedSetState, immediateSetState];
 }

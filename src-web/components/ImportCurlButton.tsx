@@ -1,5 +1,5 @@
 import { clear, readText } from '@tauri-apps/plugin-clipboard-manager';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import React, { useEffect, useState } from 'react';
 import { useImportCurl } from '../hooks/useImportCurl';
 import { useWindowFocus } from '../hooks/useWindowFocus';

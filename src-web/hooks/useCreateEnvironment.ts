@@ -38,7 +38,7 @@ export function useCreateEnvironment() {
     onSettled: () => trackEvent('environment', 'create'),
     onSuccess: async (environment) => {
       if (environment == null) return;
-      await setActiveEnvironmentId(environment.id);
+      setActiveEnvironmentId(environment.id);
     },
   });
 }

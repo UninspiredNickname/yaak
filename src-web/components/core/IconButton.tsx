@@ -8,7 +8,7 @@ import type { IconProps } from './Icon';
 import { Icon } from './Icon';
 
 type Props = IconProps &
-  ButtonProps & {
+  Omit<ButtonProps, 'children'> & {
     showConfirm?: boolean;
     iconClassName?: string;
     iconSize?: IconProps['size'];
@@ -47,7 +47,7 @@ export const IconButton = forwardRef<HTMLButtonElement, Props>(function IconButt
       ref={ref}
       aria-hidden={icon === 'empty'}
       disabled={icon === 'empty'}
-      tabIndex={tabIndex ?? icon === 'empty' ? -1 : undefined}
+      tabIndex={(tabIndex ?? icon === 'empty') ? -1 : undefined}
       onClick={handleClick}
       innerClassName="flex items-center justify-center"
       size={size}

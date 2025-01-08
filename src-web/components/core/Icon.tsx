@@ -59,6 +59,8 @@ const icons = {
   keyboard: lucide.KeyboardIcon,
   left_panel_hidden: lucide.PanelLeftOpenIcon,
   left_panel_visible: lucide.PanelLeftCloseIcon,
+  lock: lucide.LockIcon,
+  lock_open: lucide.LockOpenIcon,
   magic_wand: lucide.Wand2Icon,
   minus: lucide.MinusIcon,
   minus_circle: lucide.MinusCircleIcon,
@@ -111,6 +113,10 @@ export const Icon = memo(function Icon({ icon, spin, size = 'md', className, tit
         size === 'xs' && 'h-3 w-3',
         size === '2xs' && 'h-2.5 w-2.5',
         spin && 'animate-spin',
+
+        // Force rendering on the CPU (can also work with GPU) because if a parent (eg. Button)
+        // uses transparency on hover, it can cause the SVGs here to jump slightly.
+        'transform-cpu',
       )}
     />
   );

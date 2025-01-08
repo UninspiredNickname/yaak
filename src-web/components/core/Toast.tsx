@@ -1,6 +1,6 @@
 import type { ShowToastRequest } from '@yaakapp-internal/plugins';
 import classNames from 'classnames';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import type { ReactNode } from 'react';
 import React from 'react';
 import { useKey } from 'react-use';

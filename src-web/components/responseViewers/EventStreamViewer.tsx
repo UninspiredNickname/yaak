@@ -2,7 +2,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import type { HttpResponse } from '@yaakapp-internal/models';
 import type { ServerSentEvent } from '@yaakapp-internal/sse';
 import classNames from 'classnames';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import React, { Fragment, useMemo, useRef, useState } from 'react';
 import { useFormatText } from '../../hooks/useFormatText';
 import { useResponseBodyEventSource } from '../../hooks/useResponseBodyEventSource';
